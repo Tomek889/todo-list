@@ -33,6 +33,10 @@ function removeTaskFromProject(project, task) {
 
 function removeTask(task) {
   tasks = tasks.filter((element) => element !== task);
+
+  projects.forEach(project => {
+    project.tasks = project.tasks.filter((element) => element !== task);
+  });
 }
 
 function removeProjectItself(project) {
@@ -49,4 +53,3 @@ function removeProjectWithTasks(project) {
 
 // Create a default project
 createProject('Next Actions');
-
