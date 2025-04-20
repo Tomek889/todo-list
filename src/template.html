@@ -7,23 +7,43 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=add" />
 </head>
 <body>
-    <div id="modal" class="modal hidden">
+    <div id="editTaskModal" class="modal hidden">
         <div class="modal-content">
-          <h2>Edit Task</h2>
-          <form id="editForm">
-            <input type="text" id="editTitle" placeholder="Title" required />
-            <input type="text" id="editDesc" placeholder="Description" required />
-            <input type="date" id="editDate" required />
-            <select id="editPriority" required>
-              <option>Low</option>
-              <option>Medium</option>
-              <option>High</option>
-            </select>
-            <button type="submit">Save</button>
-            <button type="button" id="cancelBtn">Cancel</button>
-          </form>
+            <h2>Edit Task</h2>
+            <form id="editForm">
+                <input type="text" id="editTitle" placeholder="Title" required />
+                <input type="text" id="editDesc" placeholder="Description" required />
+                <input type="date" id="editDate" required />
+                <select id="editPriority" required>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+                </select>
+                <button type="submit">Save</button>
+                <button type="button" id="cancelBtn">Cancel</button>
+            </form>
         </div>
-      </div>
+    </div>
+    <div id="createProjectModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Create Project</h2>
+            <form id="createProjectForm">
+                <input type="text" id="newProjectName" placeholder="Project Name" required />
+                <button type="submit">Create</button>
+                <button type="button" id="cancelCreateProject">Cancel</button>
+              </form>
+        </div>
+    </div>
+    <div id="editProjectModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Edit Project</h2>
+            <form id="editProjectForm">
+                <input type="text" id="editProjectName" required />
+                <button type="submit">Save</button>
+                <button type="button" id="cancelEditProject">Cancel</button>
+              </form>
+        </div>
+    </div>
     <div class="sidebar">
         <div>
             <p>My Tasks</p>

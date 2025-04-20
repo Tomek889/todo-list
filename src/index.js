@@ -19,9 +19,10 @@ function createTask(title, description, dueDate, priority) {
   return task;
 }
 
-function createProject(name) {
+function createProject(name, description) {
   const project =  {
     name,
+    description,
     tasks: [],
   };
   projects.push(project);
@@ -135,6 +136,6 @@ function showTasks() {
 }
 
 // Create a default project
-createProject('Demo Project');
+createProject('Demo Project', 'Demo description');
 createTask('Demo Task');
 showTasks();
