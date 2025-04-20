@@ -1,7 +1,7 @@
 import './style.css';
 
-let projects = []
-let tasks = []
+let projects = [];
+let tasks = [];
 
 function createTask(title, description, dueDate, priority) {
   const task = {
@@ -49,3 +49,4 @@ function removeProjectWithTasks(project) {
 
 // Create a default project
 createProject('Next Actions');
+
