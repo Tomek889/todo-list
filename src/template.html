@@ -46,6 +46,23 @@
               </form>
         </div>
     </div>
+    <div id="createTaskModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Create Task</h2>
+            <form id="createTaskForm">
+                <input type="text" id="newTaskTitle" placeholder="Title" required>
+                <input type="text" id="newTaskDescription" placeholder="Description" required>
+                <input type="date" id="newTaskDate" required>
+                <select id="newTaskPriority" required>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+                <button type="submit">Create</button>
+                <button type="button" id="cancelCreateTask">Cancel</button>
+            </form>
+        </div>
+    </div>
     <div class="sidebar">
         <div>
             <p>My Tasks</p>

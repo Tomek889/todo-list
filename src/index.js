@@ -1,7 +1,7 @@
 import './style.css';
 
 const content = document.querySelector('#content');
-const projectsList = document.querySelector('#projects-list')
+const projectsList = document.querySelector('#projects-list');
 
 // Modal elements
 const editTaskModal = document.querySelector('#editTaskModal');
