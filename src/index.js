@@ -149,12 +149,49 @@ function showProjects() {
 
   projects.forEach(project => {
     const div = document.createElement('div');
+    div.classList.add('project-element');
+
     const title = document.createElement('p');
     title.textContent = project.name;
 
-    // todo: add edit button, delete button and modal that asks whether user wants delete tasks correlated with the project
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('edit-btn');
+    editBtn.innerHTML = '<span class="material-symbols-outlined">edit</span>';
+    editBtn.addEventListener('click', () => {
+      document.querySelector('#editProjectName').value = project.name;
+      document.querySelector('#editProjectDescription').value = project.description;
+
+      showModal(editProjectModal);
+
+      editProjectForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        project.name = document.querySelector('#editProjectName').value;
+        project.description = document.querySelector('#editProjectDescription').value;
+
+        hideModal(editProjectModal);
+        showProjects();
+      });
+    });
+
+    cancelEditProjectBtn.addEventListener('click', () => {
+      hideModal(editProjectModal);
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
+    deleteBtn.addEventListener('click', () => {
+      const confirmDelete = confirm('Do you want to delete this project and its tasks?');
+      if (confirmDelete) {
+        removeProjectWithTasks(project);
+        showProjects();
+        showTasks();
+      }
+    });
 
     div.appendChild(title);
+    div.appendChild(editBtn);
+    div.appendChild(deleteBtn);
     projectsList.appendChild(div);
   });
 }
