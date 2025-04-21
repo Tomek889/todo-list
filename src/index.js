@@ -7,20 +7,41 @@ const projectsList = document.querySelector('#projects-list');
 const editTaskModal = document.querySelector('#editTaskModal');
 const createProjectModal = document.querySelector('#createProjectModal');
 const editProjectModal = document.querySelector('#editProjectModal');
+const createTaskModal = document.querySelector('#createTaskModal');
 
 // Buttons to open modals
 const addTaskBtn = document.querySelector('#add-task');
 const addProjectBtn = document.querySelector('#add-project');
+addTaskBtn.addEventListener('click', () => showModal(createTaskModal));
+addProjectBtn.addEventListener('click', () => showModal(createProjectModal));
 
 // Buttons to close modals
 const cancelEditTaskBtn = document.querySelector('#cancelBtn');
 const cancelCreateProjectBtn = document.querySelector('#cancelCreateProject');
 const cancelEditProjectBtn = document.querySelector('#cancelEditProject');
+const cancelCreateTaskBtn = document.querySelector('#cancelCreateTask');
+cancelCreateTaskBtn.addEventListener('click', () => hideModal(createTaskModal));
+cancelCreateProjectBtn.addEventListener('click', () => hideModal(createProjectModal));
+cancelEditProjectBtn.addEventListener('click', () => hideModal(editProjectModal));
+cancelEditTaskBtn.addEventListener('click', () => hideModal(editTaskModal));
 
 // Forms
 const editTaskForm = document.querySelector('#editTaskForm');
 const createProjectForm = document.querySelector('#createProjectForm');
 const editProjectForm = document.querySelector('#editProjectForm');
+const createTaskForm = document.querySelector('#createTaskForm');
+createTaskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const title = document.querySelector('#newTaskTitle').value;
+  const description = document.querySelector('#newTaskDescription').value;
+  const dueDate = document.querySelector('#newTaskDate').value;
+  const priority = document.querySelector('#newTaskPriority').value;
+  
+  createTask(title, description, dueDate, priority);
+  hideModal(createTaskModal);
+  showTasks();
+});
 
 let projects = [];
 let tasks = [];
@@ -280,7 +301,7 @@ function hideModal(modal) {
   modal.classList.add('hidden');
 }
 
-// Create a default project
+// Create a default project and task
 let demo = createProject('Demo Project', 'Demo description');
 createTask('Demo Task', 'demo', 'ldk', 'kdk');
 showTasks();
