@@ -85,36 +85,60 @@ function showTasks() {
   tasks.forEach(task => {
     const div = document.createElement('div');
     div.classList.add('element');
+
     const title = document.createElement('p');
     title.textContent = `Title: ${task.title}`;
+
     const description = document.createElement('p');
     description.textContent = `Description: ${task.description}`;
+
     const dueDate = document.createElement('p');
     dueDate.textContent = `Due Date: ${task.dueDate}`;
+
     const priority = document.createElement('p');
     priority.textContent = `Priority: ${task.priority}`;
 
-    // const deleteBtn = document.createElement('button');
-    // deleteBtn.textContent = 'Delete';
-    // deleteBtn.classList.add('delete-btn');
-    // deleteBtn.addEventListener('click', () => {
-    //   removeTask(task);
-    //   showTasks();
-    // });
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('edit-btn');
+    editBtn.innerHTML = '<span class="material-symbols-outlined">edit</span> Edit';
+    editBtn.addEventListener('click', () => {
+      document.querySelector('#editTitle').value = task.title;
+      document.querySelector('#editDesc').value = task.description;
+      document.querySelector('#editDate').value = task.dueDate;
+      document.querySelector('#editPriority').value = task.priority;
 
-    // const editBtn = document.createElement('button');
-    // editBtn.textContent = 'Edit';
-    // editBtn.classList.add('edit-btn');
-    // editBtn.addEventListener('click', () => {
-    //   openModal(task);
-    // });
-    
+      showModal(editTaskModal);
+
+      editTaskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        task.title = document.querySelector('#editTitle').value;
+        task.description = document.querySelector('#editDesc').value;
+        task.dueDate = document.querySelector('#editDate').value;
+        task.priority = document.querySelector('#editPriority').value;
+
+        hideModal(editTaskModal);
+        showTasks();
+      });
+
+      cancelEditTaskBtn.addEventListener('click', () => {
+        hideModal(editTaskModal);
+      });
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span> Delete';
+    deleteBtn.addEventListener('click', () => {
+      removeTask(task);
+      showTasks();
+    });
+
     div.appendChild(title);
     div.appendChild(description);
     div.appendChild(dueDate);
     div.appendChild(priority);
-    // div.appendChild(editBtn);
-    // div.appendChild(deleteBtn);
+    div.appendChild(editBtn);
+    div.appendChild(deleteBtn);
 
     content.appendChild(div);
   });
@@ -153,12 +177,16 @@ function showTasksFromProject(project) {
     project.tasks.forEach(task => {
       const div = document.createElement('div');
       div.classList.add('element');
+
       const title = document.createElement('p');
       title.textContent = `Title: ${task.title}`;
+
       const description = document.createElement('p');
       description.textContent = `Description: ${task.description}`;
+
       const dueDate = document.createElement('p');
       dueDate.textContent = `Due Date: ${task.dueDate}`;
+
       const priority = document.createElement('p');
       priority.textContent = `Priority: ${task.priority}`;
 
@@ -172,9 +200,16 @@ function showTasksFromProject(project) {
   }
 }
 
+function showModal(modal) {
+  modal.classList.remove('hidden');
+}
+
+function hideModal(modal) {
+  modal.classList.add('hidden');
+}
+
 // Create a default project
 let demo = createProject('Demo Project', 'Demo description');
-createTask('Demo Task');
+createTask('Demo Task', 'demo', 'ldk', 'kdk');
 showTasks();
 showProjects();
-showTasksFromProject(demo);
