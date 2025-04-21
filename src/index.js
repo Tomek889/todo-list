@@ -30,18 +30,7 @@ const editTaskForm = document.querySelector('#editTaskForm');
 const createProjectForm = document.querySelector('#createProjectForm');
 const editProjectForm = document.querySelector('#editProjectForm');
 const createTaskForm = document.querySelector('#createTaskForm');
-createTaskForm.addEventListener('submit', (e) => {
-  e.preventDefault();
 
-  const title = document.querySelector('#newTaskTitle').value;
-  const description = document.querySelector('#newTaskDescription').value;
-  const dueDate = document.querySelector('#newTaskDate').value;
-  const priority = document.querySelector('#newTaskPriority').value;
-  
-  createTask(title, description, dueDate, priority);
-  hideModal(createTaskModal);
-  showTasks();
-});
 
 createProjectForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -197,6 +186,7 @@ function showProjects() {
 
         hideModal(editProjectModal);
         showProjects();
+        showTasksFromProject(project);
       });
     });
 
@@ -230,12 +220,47 @@ function showTasksFromProject(project) {
   heading.classList.add('heading');
   heading.textContent = project.name;
   content.appendChild(heading);
+
   if (project.description) {
     const description = document.createElement('p');
     description.classList.add('heading-description');
     description.textContent = project.description;
     content.appendChild(description);
   }
+
+  const addTaskBtn = document.createElement('button');
+  addTaskBtn.classList.add('add-task-btn');
+  addTaskBtn.innerHTML = '<span class="material-symbols-outlined">add</span> Add Task';
+  addTaskBtn.addEventListener('click', () => {
+    showModal(createTaskModal);
+
+    createTaskForm.onsubmit = (e) => {
+      e.preventDefault();
+
+      const title = document.querySelector('#newTaskTitle').value;
+      const description = document.querySelector('#newTaskDescription').value;
+      const dueDate = document.querySelector('#newTaskDate').value;
+      const priority = document.querySelector('#newTaskPriority').value;
+
+      const task = createTask(
+        title,
+        description,
+        dueDate,
+        priority,
+      );
+      project.tasks.push(task);
+
+      hideModal(createTaskModal);
+      showTasksFromProject(project);
+    };
+  });
+  content.appendChild(addTaskBtn);
+
+  const showAllTasks = document.createElement('button');
+  showAllTasks.classList.add('show-tasks-btn');
+  showAllTasks.innerHTML = '<span class="material-symbols-outlined">list</span> Show All Tasks';
+  showAllTasks.addEventListener('click', showTasks);
+  content.appendChild(showAllTasks);
 
   if (project.tasks.length) {
     project.tasks.forEach(task => {
@@ -262,37 +287,46 @@ function showTasksFromProject(project) {
         document.querySelector('#editDesc').value = task.description;
         document.querySelector('#editDate').value = task.dueDate;
         document.querySelector('#editPriority').value = task.priority;
-  
+
         showModal(editTaskModal);
-  
-        editTaskForm.addEventListener('submit', (e) => {
+
+        editTaskForm.onsubmit = (e) => {
           e.preventDefault();
           task.title = document.querySelector('#editTitle').value;
           task.description = document.querySelector('#editDesc').value;
           task.dueDate = document.querySelector('#editDate').value;
           task.priority = document.querySelector('#editPriority').value;
-  
+
           hideModal(editTaskModal);
-          showTasks();
-        });
-  
-        cancelEditTaskBtn.addEventListener('click', () => {
-          hideModal(editTaskModal);
-        });
+          showTasksFromProject(project);
+        };
       });
-  
+
       const deleteBtn = document.createElement('button');
       deleteBtn.classList.add('delete-btn');
       deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span> Delete';
       deleteBtn.addEventListener('click', () => {
-        removeTask(task);
-        showTasks();
+
+        project.tasks = project.tasks.filter(t => t !== task);
+
+        tasks = tasks.filter(t => t !== task);
+
+        showTasksFromProject(project);
       });
+
+      div.appendChild(title);
+      div.appendChild(description);
+      div.appendChild(dueDate);
+      div.appendChild(priority);
+      div.appendChild(editBtn);
+      div.appendChild(deleteBtn);
+
+      content.appendChild(div);
     });
   } else {
     const info = document.createElement('p');
     info.classList.add('info');
-    info.textContent = 'You haven\'t currently any tasks in that project.';
+    info.textContent = 'This project has no tasks yet.';
     content.appendChild(info);
   }
 }
