@@ -3,6 +3,25 @@ import './style.css';
 const content = document.querySelector('#content');
 const projectsList = document.querySelector('#projects-list')
 
+// Modal elements
+const editTaskModal = document.querySelector('#editTaskModal');
+const createProjectModal = document.querySelector('#createProjectModal');
+const editProjectModal = document.querySelector('#editProjectModal');
+
+// Buttons to open modals
+const addTaskBtn = document.querySelector('#add-task');
+const addProjectBtn = document.querySelector('#add-project');
+
+// Buttons to close modals
+const cancelEditTaskBtn = document.querySelector('#cancelBtn');
+const cancelCreateProjectBtn = document.querySelector('#cancelCreateProject');
+const cancelEditProjectBtn = document.querySelector('#cancelEditProject');
+
+// Forms
+const editTaskForm = document.querySelector('#editTaskForm');
+const createProjectForm = document.querySelector('#createProjectForm');
+const editProjectForm = document.querySelector('#editProjectForm');
+
 let projects = [];
 let tasks = [];
 
