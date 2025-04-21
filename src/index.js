@@ -150,7 +150,9 @@ function showProjects() {
   projects.forEach(project => {
     const div = document.createElement('div');
     div.classList.add('project-element');
-
+    div.addEventListener('click', () => {
+      showTasksFromProject(project);
+    });
     const title = document.createElement('p');
     title.textContent = project.name;
 
