@@ -227,7 +227,40 @@ function showTasksFromProject(project) {
       const priority = document.createElement('p');
       priority.textContent = `Priority: ${task.priority}`;
 
-      // todo: add edit button, and delete button
+      const editBtn = document.createElement('button');
+      editBtn.classList.add('edit-btn');
+      editBtn.innerHTML = '<span class="material-symbols-outlined">edit</span> Edit';
+      editBtn.addEventListener('click', () => {
+        document.querySelector('#editTitle').value = task.title;
+        document.querySelector('#editDesc').value = task.description;
+        document.querySelector('#editDate').value = task.dueDate;
+        document.querySelector('#editPriority').value = task.priority;
+  
+        showModal(editTaskModal);
+  
+        editTaskForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          task.title = document.querySelector('#editTitle').value;
+          task.description = document.querySelector('#editDesc').value;
+          task.dueDate = document.querySelector('#editDate').value;
+          task.priority = document.querySelector('#editPriority').value;
+  
+          hideModal(editTaskModal);
+          showTasks();
+        });
+  
+        cancelEditTaskBtn.addEventListener('click', () => {
+          hideModal(editTaskModal);
+        });
+      });
+  
+      const deleteBtn = document.createElement('button');
+      deleteBtn.classList.add('delete-btn');
+      deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span> Delete';
+      deleteBtn.addEventListener('click', () => {
+        removeTask(task);
+        showTasks();
+      });
     });
   } else {
     const info = document.createElement('p');
