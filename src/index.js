@@ -366,6 +366,11 @@ function hideModal(modal) {
   modal.classList.add('hidden');
 }
 
+function saveToLocalStorage() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  localStorage.setItem('projects', JSON.stringify(projects));
+}
+
 // Create a default project and task
 let demoProject = createProject('Demo Project', 'Demo Description');
 let demoTask = createTask('Demo Task', 'Demo Task Description', '21-04-2025', 'Medium');
