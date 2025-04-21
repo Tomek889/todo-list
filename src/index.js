@@ -13,7 +13,10 @@ const createTaskModal = document.querySelector('#createTaskModal');
 const addTaskBtn = document.querySelector('#add-task');
 const addProjectBtn = document.querySelector('#add-project');
 addTaskBtn.addEventListener('click', () => showModal(createTaskModal));
-addProjectBtn.addEventListener('click', () => showModal(createProjectModal));
+addProjectBtn.addEventListener('click', () => {
+  createProjectForm.reset();
+  showModal(createProjectModal);
+});
 
 // Buttons to close modals
 const cancelEditTaskBtn = document.querySelector('#cancelBtn');
@@ -31,6 +34,21 @@ const createProjectForm = document.querySelector('#createProjectForm');
 const editProjectForm = document.querySelector('#editProjectForm');
 const createTaskForm = document.querySelector('#createTaskForm');
 
+addTaskBtn.addEventListener('click', () => {
+  createTaskForm.reset();
+  createTaskForm.onsubmit = (e) => {
+    e.preventDefault();
+
+    const title = document.querySelector('#newTaskTitle').value;
+    const description = document.querySelector('#newTaskDescription').value;
+    const dueDate = document.querySelector('#newTaskDate').value;
+    const priority = document.querySelector('#newTaskPriority').value;
+
+    createTask(title, description, dueDate, priority);
+    hideModal(createTaskModal);
+    showTasks();
+  };
+});
 
 createProjectForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -95,6 +113,13 @@ function showTasks() {
   heading.classList.add('heading');
   heading.textContent = 'Next Actions';
   content.appendChild(heading);
+
+  if (!tasks.length) {
+    const info = document.createElement('p');
+    info.classList.add('info');
+    info.textContent = 'No tasks available.';
+    content.appendChild(info);
+  }
 
   tasks.forEach(task => {
     const div = document.createElement('div');
@@ -197,7 +222,8 @@ function showProjects() {
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-btn');
     deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
-    deleteBtn.addEventListener('click', () => {
+    deleteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const confirmDelete = confirm('Do you want to delete this project and its tasks?');
       if (confirmDelete) {
         removeProjectWithTasks(project);
@@ -230,8 +256,9 @@ function showTasksFromProject(project) {
 
   const addTaskBtn = document.createElement('button');
   addTaskBtn.classList.add('add-task-btn');
-  addTaskBtn.innerHTML = '<span class="material-symbols-outlined">add</span> Add Task';
+  addTaskBtn.innerHTML = '<span class="material-symbols-outlined">add</span> Add Task to Project';
   addTaskBtn.addEventListener('click', () => {
+    createTaskForm.reset();
     showModal(createTaskModal);
 
     createTaskForm.onsubmit = (e) => {
