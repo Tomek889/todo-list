@@ -43,6 +43,18 @@ createTaskForm.addEventListener('submit', (e) => {
   showTasks();
 });
 
+createProjectForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const name = document.querySelector('#newProjectName').value;
+  const description = document.querySelector('#newProjectDescription').value;
+
+  createProject(name, description);
+  hideModal(createProjectModal);
+  showProjects();
+});
+cancelCreateProjectBtn.addEventListener('click', () => hideModal(createProjectModal));
+
 let projects = [];
 let tasks = [];
 
