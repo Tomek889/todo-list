@@ -79,14 +79,6 @@ function createProject(name, description) {
   return project;
 }
 
-function addTaskToProject(project, task) {
-    project.tasks.push(task);
-}
-
-function removeTaskFromProject(project, task) {
-  project.tasks = project.tasks.filter((element) => element !== task);
-}
-
 function removeTask(task) {
   tasks = tasks.filter((element) => element !== task);
 
@@ -112,7 +104,7 @@ function showTasks() {
 
   const heading = document.createElement('p');
   heading.classList.add('heading');
-  heading.textContent = 'My Tasks';
+  heading.textContent = 'Next Actions';
   content.appendChild(heading);
 
   tasks.forEach(task => {
