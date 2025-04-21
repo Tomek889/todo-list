@@ -1,9 +1,7 @@
 import './style.css';
 
 const content = document.querySelector('#content');
-const modal = document.querySelector('#modal');
-const editForm = document.querySelector('#editForm');
-const cancelBtn = document.querySelector('#cancelBtn');
+const projectsList = document.querySelector('#projects-list')
 
 let projects = [];
 let tasks = [];
@@ -57,38 +55,6 @@ function removeProjectWithTasks(project) {
   removeProjectItself(project);
 }
 
-let currentTaskBeingEdited = null;
-function openModal(task) {
-  currentTaskBeingEdited = task;
-
-  document.getElementById('editTitle').value = task.title;
-  document.getElementById('editDesc').value = task.description;
-  document.getElementById('editDate').value = task.dueDate;
-  document.getElementById('editPriority').value = task.priority;
-
-  modal.classList.remove('hidden');
-}
-
-function closeModal() {
-  modal.classList.add('hidden');
-  currentTaskBeingEdited = null;
-}
-
-editForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (currentTaskBeingEdited) {
-    currentTaskBeingEdited.title = document.getElementById('editTitle').value;
-    currentTaskBeingEdited.description = document.getElementById('editDesc').value;
-    currentTaskBeingEdited.dueDate = document.getElementById('editDate').value;
-    currentTaskBeingEdited.priority = document.getElementById('editPriority').value;
-
-    showTasks();
-    closeModal();
-  }
-});
-
-cancelBtn.addEventListener('click', closeModal);
-
 function showTasks() {
   content.innerHTML = '';
 
@@ -109,29 +75,42 @@ function showTasks() {
     const priority = document.createElement('p');
     priority.textContent = `Priority: ${task.priority}`;
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.addEventListener('click', () => {
-      removeTask(task);
-      showTasks();
-    });
+    // const deleteBtn = document.createElement('button');
+    // deleteBtn.textContent = 'Delete';
+    // deleteBtn.classList.add('delete-btn');
+    // deleteBtn.addEventListener('click', () => {
+    //   removeTask(task);
+    //   showTasks();
+    // });
 
-    const editBtn = document.createElement('button');
-    editBtn.textContent = 'Edit';
-    editBtn.classList.add('edit-btn');
-    editBtn.addEventListener('click', () => {
-      openModal(task);
-    });
+    // const editBtn = document.createElement('button');
+    // editBtn.textContent = 'Edit';
+    // editBtn.classList.add('edit-btn');
+    // editBtn.addEventListener('click', () => {
+    //   openModal(task);
+    // });
     
     div.appendChild(title);
     div.appendChild(description);
     div.appendChild(dueDate);
     div.appendChild(priority);
-    div.appendChild(editBtn);
-    div.appendChild(deleteBtn);
+    // div.appendChild(editBtn);
+    // div.appendChild(deleteBtn);
 
     content.appendChild(div);
+  });
+}
+
+function showProjects() {
+  projectsList.innerHTML = '';
+
+  projects.forEach(project => {
+    const div = document.createElement('div');
+    const title = document.createElement('p');
+    title.textContent = project.name;
+
+    div.appendChild(title);
+    projectsList.appendChild(div);
   });
 }
 
@@ -139,3 +118,4 @@ function showTasks() {
 createProject('Demo Project', 'Demo description');
 createTask('Demo Task');
 showTasks();
+showProjects();
