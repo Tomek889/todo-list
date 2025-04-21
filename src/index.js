@@ -109,13 +109,53 @@ function showProjects() {
     const title = document.createElement('p');
     title.textContent = project.name;
 
+    // todo: add edit button, delete button and modal that asks whether user wants delete tasks correlated with the project
+
     div.appendChild(title);
     projectsList.appendChild(div);
   });
 }
 
+function showTasksFromProject(project) {
+  content.innerHTML = '';
+
+  const heading = document.createElement('p');
+  heading.classList.add('heading');
+  heading.textContent = project.name;
+  content.appendChild(heading);
+  if (project.description) {
+    const description = document.createElement('p');
+    description.classList.add('heading-description');
+    description.textContent = project.description;
+    content.appendChild(description);
+  }
+
+  if (project.tasks.length) {
+    project.tasks.forEach(task => {
+      const div = document.createElement('div');
+      div.classList.add('element');
+      const title = document.createElement('p');
+      title.textContent = `Title: ${task.title}`;
+      const description = document.createElement('p');
+      description.textContent = `Description: ${task.description}`;
+      const dueDate = document.createElement('p');
+      dueDate.textContent = `Due Date: ${task.dueDate}`;
+      const priority = document.createElement('p');
+      priority.textContent = `Priority: ${task.priority}`;
+
+      // todo: add edit button, and delete button
+    });
+  } else {
+    const info = document.createElement('p');
+    info.classList.add('info');
+    info.textContent = 'You haven\'t currently any tasks in that project.';
+    content.appendChild(info);
+  }
+}
+
 // Create a default project
-createProject('Demo Project', 'Demo description');
+let demo = createProject('Demo Project', 'Demo description');
 createTask('Demo Task');
 showTasks();
 showProjects();
+showTasksFromProject(demo);
