@@ -61,6 +61,102 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 3px 0 5px rgba(0,0,0,0.2);
 }
 
+.sidebar > div > p:first-of-type {
+    font-size: 1.6rem;
+}
+
+#add-task,
+#add-project {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 1rem;
+}
+
+#add-task:hover,
+#add-project:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.sidebar button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.6rem;
+}
+
+.sidebar .delete-btn {
+    margin-left: 0.5rem;
+    background-color: #f44336;
+    color: #ffffff;
+    border: 0;
+    border-radius: 4px;
+}
+
+.sidebar .delete-btn:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar .edit-btn {
+    margin-left: 0.5rem;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: 0;
+    border-radius: 4px;
+}
+
+.sidebar .edit-btn:hover {
+    background-color: #45a049; 
+    transform: scale(1.05);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#projects-list {
+    margin-top: 30px;
+}
+
+.project-element {
+    padding: 8px;
+}
+
+.project-element button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-element p {
+    margin-right: auto;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.project-element:hover {
+    background-color: rgba(78, 78, 78, 0.5);
+    border-radius: 8px;
+}
+
+.projectsClass {
+    margin-top: 30px;
+}
+
 #content {
     width: 80vw;
     overflow-y: auto;
