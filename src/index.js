@@ -73,6 +73,7 @@ function createTask(title, description, dueDate, priority) {
     priority,
   };
   tasks.push(task);
+  saveToLocalStorage();
   return task;
 }
 
@@ -83,6 +84,7 @@ function createProject(name, description) {
     tasks: [],
   };
   projects.push(project);
+  saveToLocalStorage();
   return project;
 }
 
@@ -92,6 +94,8 @@ function removeTask(task) {
   projects.forEach(project => {
     project.tasks = project.tasks.filter((element) => element !== task);
   });
+
+  saveToLocalStorage();
 }
 
 function removeProjectItself(project) {
@@ -155,6 +159,7 @@ function showTasks() {
         task.dueDate = document.querySelector('#editDate').value;
         task.priority = document.querySelector('#editPriority').value;
 
+        saveToLocalStorage();
         hideModal(editTaskModal);
         showTasks();
       });
@@ -169,6 +174,7 @@ function showTasks() {
     deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span> Delete';
     deleteBtn.addEventListener('click', () => {
       removeTask(task);
+      saveToLocalStorage();
       showTasks();
     });
 
@@ -204,15 +210,16 @@ function showProjects() {
 
       showModal(editProjectModal);
 
-      editProjectForm.addEventListener('submit', (e) => {
+      editProjectForm.onsubmit = (e) => {
         e.preventDefault();
         project.name = document.querySelector('#editProjectName').value;
         project.description = document.querySelector('#editProjectDescription').value;
 
+        saveToLocalStorage();
         hideModal(editProjectModal);
         showProjects();
         showTasksFromProject(project);
-      });
+      };
     });
 
     cancelEditProjectBtn.addEventListener('click', () => {
@@ -227,6 +234,7 @@ function showProjects() {
       const confirmDelete = confirm('Do you want to delete this project and its tasks?');
       if (confirmDelete) {
         removeProjectWithTasks(project);
+        saveToLocalStorage();
         showProjects();
         showTasks();
       }
@@ -277,6 +285,7 @@ function showTasksFromProject(project) {
       );
       project.tasks.push(task);
 
+      saveToLocalStorage();
       hideModal(createTaskModal);
       showTasksFromProject(project);
     };
@@ -324,6 +333,7 @@ function showTasksFromProject(project) {
           task.dueDate = document.querySelector('#editDate').value;
           task.priority = document.querySelector('#editPriority').value;
 
+          saveToLocalStorage();
           hideModal(editTaskModal);
           showTasksFromProject(project);
         };
@@ -338,6 +348,7 @@ function showTasksFromProject(project) {
 
         tasks = tasks.filter(t => t !== task);
 
+        saveToLocalStorage();
         showTasksFromProject(project);
       });
 
@@ -371,9 +382,25 @@ function saveToLocalStorage() {
   localStorage.setItem('projects', JSON.stringify(projects));
 }
 
-// Create a default project and task
-let demoProject = createProject('Demo Project', 'Demo Description');
-let demoTask = createTask('Demo Task', 'Demo Task Description', '21-04-2025', 'Medium');
-demoProject.tasks.push(demoTask);
+function loadFromLocalStorage() {
+  const storedTasks = localStorage.getItem('tasks');
+  const storedProjects = localStorage.getItem('projects');
+
+  if (storedTasks) {
+    tasks = JSON.parse(storedTasks);
+  }
+
+  if (storedProjects) {
+    projects = JSON.parse(storedProjects);
+  }
+}
+
+if (localStorage.getItem('tasks') || localStorage.getItem('projects')) {
+  loadFromLocalStorage();
+} else {
+  let demoProject = createProject('Demo Project', 'Demo Description');
+  let demoTask = createTask('Demo Task', 'Demo Task Description', '2025-04-21', 'Medium');
+  demoProject.tasks.push(demoTask);
+}
 showTasks();
 showProjects();
