@@ -367,7 +367,8 @@ function hideModal(modal) {
 }
 
 // Create a default project and task
-let demo = createProject('Demo Project', 'Demo description');
-createTask('Demo Task', 'demo', 'ldk', 'kdk');
+let demoProject = createProject('Demo Project', 'Demo Description');
+let demoTask = createTask('Demo Task', 'Demo Task Description', '21-04-2025', 'Medium');
+demoProject.tasks.push(demoTask);
 showTasks();
 showProjects();
